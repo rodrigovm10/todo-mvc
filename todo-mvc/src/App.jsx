@@ -1,5 +1,17 @@
+import { HomePage, NotFoundPage } from './pages'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+const router = createBrowserRouter([
+	{
+		path: '/',
+		element: <HomePage />
+	},
+	{
+		path: '*',
+		element: <NotFoundPage />
+	}
+])
+
 export default function App() {
-  return (
-    <h1 className="text-3xl font-bold text-red-950 underline">Hello world!</h1>
-  );
+	return <RouterProvider router={router} />
 }
