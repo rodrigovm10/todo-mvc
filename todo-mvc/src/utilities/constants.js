@@ -1,6 +1,6 @@
-export const days = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
+export const DAYS = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado']
 
-export const months = [
+export const MONTHS = [
 	'Enero',
 	'Febrero',
 	'Marzo',
@@ -14,3 +14,5 @@ export const months = [
 	'Noviembre',
 	'Diciembre'
 ]
+
+export const INITIAL_TODO = { name: '', date: '', completed: false }

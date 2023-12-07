@@ -11,8 +11,8 @@ export const getTodos = async (req, res) => {
 
 export const createTodos = async (req, res) => {
 	try {
-		const { name, description, date } = req.body
-		const newTodo = new Todo({ name, description, date })
+		const { name, date } = req.body
+		const newTodo = new Todo({ name, date })
 		await newTodo.save()
 		return res.json(newTodo)
 	} catch (error) {
