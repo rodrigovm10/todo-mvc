@@ -5,7 +5,7 @@ import { Formik, Form as FormFormik, Field, ErrorMessage } from 'formik'
 import * as yup from 'yup'
 
 export function Form() {
-	const { setTodo, createPost } = useTodo()
+	const { setTodo, createTodo } = useTodo()
 	const { dateCreated } = useDate()
 
 	return (
@@ -23,9 +23,10 @@ export function Form() {
 					completed: false
 				}}
 				validationSchema={yup.object({ name: yup.string().required('No puedes guardar una tarea vacía') })}
-				onSubmit={async values => {
-					await createPost(values)
+				onSubmit={async (values, { resetForm }) => {
+					await createTodo(values)
 					setTodo(values)
+					resetForm()
 				}}
 			>
 				{({ handleSubmit }) => (

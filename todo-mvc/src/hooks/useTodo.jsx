@@ -1,12 +1,11 @@
 import { useContext, useEffect, useState } from 'react'
-import { getTodosRequest, createTodoRequest } from '../../api/todos'
+import { getTodosRequest, createTodoRequest, deleteTodoRequest, updateTodoRequest } from '../../api/todos'
 import { TodoContext } from '../context/todoContext'
 
 export function useTodo() {
 	const { todos, setTodos } = useContext(TodoContext)
 	const [todo, setTodo] = useState()
 	const { length } = todos
-	const [checkedState, setCheckedState] = useState(new Array(length).fill(false))
 	const [error, setError] = useState('')
 
 	const getTodos = async () => {
@@ -14,31 +13,38 @@ export function useTodo() {
 		setTodos(res.data)
 	}
 
-	const createPost = async todo => {
-		console.log(todo)
-		await createTodoRequest(todo)
+	const createTodo = async todo => {
+		const res = await createTodoRequest(todo)
+		setTodos(prevTodos => [...prevTodos, res.data])
+	}
+
+	const deleteTodo = async id => {
+		await deleteTodoRequest(id)
+		setTodos(todos.filter(todo => todo.id !== id))
+		setTodo(todos)
+	}
+
+	const updateTodo = async (id, todo) => {
+		const res = await updateTodoRequest(id, todo)
+		console.log(res)
 	}
 
 	useEffect(() => {
 		getTodos()
 	}, [todo])
-
-	const changeCheckbox = position => {
-		const updatedCheckedState = checkedState.map((item, i) => (i === position ? !item : item))
-		console.log(position)
-		console.log(updatedCheckedState)
-		setCheckedState(updatedCheckedState)
-	}
+	useEffect(() => {
+		getTodos()
+	}, [])
 
 	return {
 		getTodos,
-		createPost,
+		createTodo,
 		setError,
-		changeCheckbox,
+		deleteTodo,
 		setTodo,
+		updateTodo,
 		todos,
 		error,
-		length,
-		checkedState
+		length
 	}
 }
